@@ -1,4 +1,4 @@
-package com.example.demo.web;
+package com.example.demo.web.api01;
 
 import java.io.Serializable;
 
