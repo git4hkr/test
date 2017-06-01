@@ -2,6 +2,7 @@ package com.example.demo.web;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -31,10 +32,12 @@ public class SampleService implements BLogic<Param, OutputParam> {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
+	private SqlSessionFactory sqlSessionFactory;
+	@Autowired
 	private PlatformTransactionManager transactionManager;
 
 	@Override
-	//@BLogicTransaction
+	// @BLogicTransaction
 	@RequestMapping("/sample.do")
 	@ResponseBody
 	public OutputParam process(Param param) throws Exception {
