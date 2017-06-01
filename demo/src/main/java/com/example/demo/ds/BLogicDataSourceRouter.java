@@ -1,8 +1,12 @@
 package com.example.demo.ds;
 
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
-public class BLogicDataSourceRouter extends AbstractRoutingDataSource {
+import com.example.demo.DataSourceProxy;
+
+public class BLogicDataSourceRouter extends AbstractRoutingDataSource implements DataSourceProxy {
 
 	private static final ThreadLocal<String> SHARD_UNIQUE_RESOURCE_NAME = new ThreadLocal<>();
 
@@ -25,6 +29,11 @@ public class BLogicDataSourceRouter extends AbstractRoutingDataSource {
 	@Override
 	protected Object determineCurrentLookupKey() {
 		return getUniqueResourceName();
+	}
+
+	@Override
+	public DataSource getRowDataSource() {
+		return determineCurrentLookupKey() == null ? null : determineTargetDataSource();
 	}
 
 }

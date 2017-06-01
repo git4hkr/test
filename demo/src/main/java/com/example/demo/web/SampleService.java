@@ -5,8 +5,6 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +34,7 @@ public class SampleService implements BLogic<Param, OutputParam> {
 	private PlatformTransactionManager transactionManager;
 
 	@Override
-	@BLogicTransaction
+	//@BLogicTransaction
 	@RequestMapping("/sample.do")
 	@ResponseBody
 	public OutputParam process(Param param) throws Exception {

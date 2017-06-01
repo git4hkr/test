@@ -18,12 +18,15 @@ import org.springframework.boot.bind.RelaxedDataBinder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jta.XADataSourceWrapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
 import com.example.demo.ds.BLogicDataSourceRouter;
+import com.example.demo.jdbc.DataSourceProxyAwareJdbcTemplate;
 
 @EnableConfigurationProperties(XADataSourceProperties.class)
 @ConditionalOnClass({ DataSource.class, TransactionManager.class, EmbeddedDatabaseType.class })
@@ -40,10 +43,19 @@ public class BLogicXADataSourceAutoConfiguration implements BeanClassLoaderAware
 	private Map<Object, Object> xaDataSources = new HashMap<>();
 
 	@Bean
+	@Primary
 	public DataSource dataSource() throws Exception {
 		BLogicDataSourceRouter ds = new BLogicDataSourceRouter();
 		ds.setTargetDataSources(xaDataSources);
 		return ds;
+	}
+
+	@Bean
+	@Primary
+	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+		JdbcTemplate bean = new DataSourceProxyAwareJdbcTemplate();
+		bean.setDataSource(dataSource);
+		return bean;
 	}
 
 	@Override
