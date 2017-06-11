@@ -20,6 +20,7 @@ public class AbstractService implements BLogicShardNoResolver {
 	@BLogicExceptionHandler
 	public OutputParam handleException(BLogicException ex) {
 		SysLog.syslog(ex);
+		log.error("", ex);
 		return new OutputParam(ResultCode.SYSTEM_ERR);
 	}
 
