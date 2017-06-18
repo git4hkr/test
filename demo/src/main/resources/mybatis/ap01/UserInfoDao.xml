@@ -5,15 +5,16 @@
 <mapper namespace="com.example.demo.web.api01.dao.UserInfoDao">
 
 	<insert id="insert" parameterType="com.example.demo.web.api01.model.UserInfoDto"
-		statementType="PREPARED" timeout="180000">
+		statementType="PREPARED">
 		<![CDATA[
-			INSERT INTO T_USERS (id,firstname,lastname,updatetime)
+			INSERT INTO T_USERS (id,firstname,lastname,sex,birthday,updatetime)
 			values
-			(#{id},#{firstname},#{lastname},#{updatetime})
+			(#{id},#{firstname},#{lastname},#{sex, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},#{birthday},#{updatetime})
 		]]>
 	</insert>
 
-	<select id="select" resultType="map">
+	<select id="select" statementType="PREPARED"
+		resultType="com.example.demo.web.api01.model.UserInfoDto">
 		select * from T_Users
 	</select>
 
