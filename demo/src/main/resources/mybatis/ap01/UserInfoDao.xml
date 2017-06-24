@@ -9,7 +9,11 @@
 		<![CDATA[
 			INSERT INTO T_USERS (id,firstname,lastname,sex,birthday,updatetime)
 			values
+<<<<<<< HEAD
 			(#{id},#{firstname},#{lastname},#{sex, typeHandler=com.example.demo.mybatis.CodableEnumTypeHandler},#{birthday},#{updatetime})
+=======
+			(#{id},#{firstname},#{lastname},#{sex, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},#{birthday},#{updatetime})
+>>>>>>> branch 'master' of https://github.com/git4hkr/test.git
 		]]>
 	</insert>
 
