@@ -1,6 +1,6 @@
 package com.example.demo.web.api01.model;
 
-import com.example.demo.web.common.model.SexType;
+import com.example.demo.web.common.enums.SexType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;

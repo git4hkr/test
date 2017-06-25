@@ -1,4 +1,4 @@
-package com.example.demo.web.common.model;
+package com.example.demo.web.common.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

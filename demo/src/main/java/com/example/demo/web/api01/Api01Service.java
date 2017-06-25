@@ -19,7 +19,7 @@ import com.example.demo.web.api01.dao.UserInfoDao;
 import com.example.demo.web.api01.model.UserInfoDto;
 import com.example.demo.web.common.AbstractService;
 import com.example.demo.web.common.CommonProperties;
-import com.example.demo.web.common.model.SexType;
+import com.example.demo.web.common.enums.SexType;
 
 import lombok.extern.slf4j.Slf4j;
 import oldtricks.blogic.BLogicDataSourceConfig;
@@ -147,7 +147,7 @@ public class Api01Service extends AbstractService {
 	 *
 	 * @return
 	 */
-	public List<UserInfoDto> selectMales() {
+	List<UserInfoDto> selectMales() {
 		return userInfoDao.select(UserInfoDto.builder().sex(SexType.男性).build());
 	}
 }
