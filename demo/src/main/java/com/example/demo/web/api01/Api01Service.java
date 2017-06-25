@@ -1,6 +1,9 @@
 package com.example.demo.web.api01;
 
+import static oldtricks.blogic.BLogicDataSourceConfig.*;
+
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -77,6 +80,9 @@ public class Api01Service extends AbstractService {
 		OutputParam ret = new OutputParam(ResultCode.NORMAL_END);
 		updateShard(false);
 		updateMaster(false);
+		for (UserInfoDto dto : selectUserFromMaster(false)) {
+			System.out.println(dto);
+		}
 		return ret;
 	}
 
@@ -87,7 +93,7 @@ public class Api01Service extends AbstractService {
 	 * @throws Exception
 	 */
 	@BLogicFunction(value = "updateMaster", showMsg = true, msgId = "MSG_0001")
-	@BLogicDataSourceConfig(type = BLogicDataSourceConfig.TYPE_MASTER, readReplica = false)
+	@BLogicDataSourceConfig(type = TYPE_MASTER, readReplica = false)
 	void updateMaster(boolean throwEx) throws Exception {
 		insertUser("太郎", "山田", SexType.男性, throwEx);
 	}
@@ -98,8 +104,20 @@ public class Api01Service extends AbstractService {
 	 * @param throwEx
 	 * @throws Exception
 	 */
+	@BLogicFunction(value = "selectUserFromMaster", showMsg = true, msgId = "MSG_0001")
+	@BLogicDataSourceConfig(type = TYPE_MASTER, readReplica = false)
+	List<UserInfoDto> selectUserFromMaster(boolean throwEx) throws Exception {
+		return selectMales();
+	}
+
+	/**
+	 * 業務処理を記述します。
+	 *
+	 * @param throwEx
+	 * @throws Exception
+	 */
 	@BLogicFunction(value = "updateShard", showMsg = true, msgId = "MSG_0002")
-	@BLogicDataSourceConfig(type = BLogicDataSourceConfig.TYPE_SHARD, readReplica = false)
+	@BLogicDataSourceConfig(type = TYPE_SHARD, readReplica = false)
 	void updateShard(boolean throwEx) {
 		insertUser("花子", "山田", SexType.女性, throwEx);
 	}
@@ -123,4 +141,12 @@ public class Api01Service extends AbstractService {
 		return ret;
 	}
 
+	/**
+	 * 男性のユーザー情報を取得します。
+	 *
+	 * @return
+	 */
+	public List<UserInfoDto> selectMales() {
+		return userInfoDao.select(UserInfoDto.builder().sex(SexType.男性).build());
+	}
 }
