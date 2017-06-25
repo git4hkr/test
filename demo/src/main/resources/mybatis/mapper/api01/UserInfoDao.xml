@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.web.api01.dao.UserInfoDao">
+
+	<insert id="insert" parameterType="com.example.demo.web.api01.model.UserInfoDto">
+		<![CDATA[
+			INSERT INTO T_USERS (id,firstname,lastname,sex,birthday,updatetime)
+			values
+			(#{id},#{firstname},#{lastname},#{sex},#{birthday},#{updatetime})
+		]]>
+	</insert>
+
+	<select id="select" resultType="com.example.demo.web.api01.model.UserInfoDto">
+		<![CDATA[
+		SELECT * FROM T_USERS
+		WHERE
+		]]>
+		<if test="sex != null">
+			sex = #{sex}
+		</if>
+	</select>
+
+</mapper>
