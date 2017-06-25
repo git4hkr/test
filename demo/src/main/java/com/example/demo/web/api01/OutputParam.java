@@ -1,20 +1,24 @@
 package com.example.demo.web.api01;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.example.demo.model.売上データ;
+import com.example.demo.web.api01.model.UserInfoDto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OutputParam implements Serializable {
 
 	private static final long serialVersionUID = 583184444233475969L;
-	private String name = "AAAAAA";
-	private List<売上データ> 売上データs = new ArrayList<>();
 	private ResultCode resultCode;
+	private List<UserInfoDto> users;
 
 	public OutputParam(ResultCode resultCode) {
 		super();

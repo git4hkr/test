@@ -1,5 +1,7 @@
 package com.example.demo.web.common.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import oldtricks.blogic.mybatis.typehandler.CodableEnum;
 
 /**
@@ -20,6 +22,7 @@ public enum SexType implements CodableEnum {
 	}
 
 	@Override
+	@JsonValue
 	public int getCode() {
 		return code;
 	}

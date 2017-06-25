@@ -3,11 +3,12 @@ package com.example.demo;
 import java.util.Collections;
 
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
@@ -20,7 +21,7 @@ import oldtricks.blogic.springcontext.BLogicFunctionEnhanceBeanPostProcessor;
 public class DemoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		new SpringApplicationBuilder(DemoApplication.class).bannerMode(Mode.OFF).application().run(args);
 	}
 
 	/**

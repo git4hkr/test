@@ -1,6 +1,7 @@
 package com.example.demo.web.api01.model;
 
 import com.example.demo.web.common.model.SexType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,11 +38,13 @@ public class UserInfoDto {
 	/**
 	 * 生年月日:datetime(0)
 	 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Tokyo")
 	private java.sql.Timestamp birthday;
 
 	/**
 	 * 更新日時:timestamp(0)
 	 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "Asia/Tokyo")
 	private java.sql.Timestamp updatetime;
 
 }

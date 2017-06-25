@@ -72,7 +72,6 @@ public class Api01Service extends AbstractService {
 	 * @throws Exception
 	 *             何らかの例外発生時
 	 */
-	@BLogicTransaction
 	@RequestMapping("/sample.do")
 	@ResponseBody
 	@BLogicEntry
@@ -80,9 +79,8 @@ public class Api01Service extends AbstractService {
 		OutputParam ret = new OutputParam(ResultCode.NORMAL_END);
 		updateShard(false);
 		updateMaster(false);
-		for (UserInfoDto dto : selectUserFromMaster(false)) {
-			System.out.println(dto);
-		}
+		List<UserInfoDto> users = selectUserFromMaster(false);
+		ret.setUsers(users);
 		return ret;
 	}
 
@@ -94,6 +92,7 @@ public class Api01Service extends AbstractService {
 	 */
 	@BLogicFunction(value = "updateMaster", showMsg = true, msgId = "MSG_0001")
 	@BLogicDataSourceConfig(type = TYPE_MASTER, readReplica = false)
+	@BLogicTransaction
 	void updateMaster(boolean throwEx) throws Exception {
 		insertUser("太郎", "山田", SexType.男性, throwEx);
 	}
@@ -106,6 +105,7 @@ public class Api01Service extends AbstractService {
 	 */
 	@BLogicFunction(value = "selectUserFromMaster", showMsg = true, msgId = "MSG_0001")
 	@BLogicDataSourceConfig(type = TYPE_MASTER, readReplica = false)
+	@BLogicTransaction(readOnly = true)
 	List<UserInfoDto> selectUserFromMaster(boolean throwEx) throws Exception {
 		return selectMales();
 	}
@@ -118,6 +118,7 @@ public class Api01Service extends AbstractService {
 	 */
 	@BLogicFunction(value = "updateShard", showMsg = true, msgId = "MSG_0002")
 	@BLogicDataSourceConfig(type = TYPE_SHARD, readReplica = false)
+	@BLogicTransaction
 	void updateShard(boolean throwEx) {
 		insertUser("花子", "山田", SexType.女性, throwEx);
 	}
