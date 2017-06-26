@@ -1,6 +1,7 @@
 package com.example.demo.web.api01;
 
-import static oldtricks.blogic.BLogicDataSourceConfig.*;
+import static oldtricks.blogic.BLogicDataSourceConfig.TYPE_MASTER;
+import static oldtricks.blogic.BLogicDataSourceConfig.TYPE_SHARD;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.web.api01.Api01ServiceTest.TestIf;
 import com.example.demo.web.api01.OutputParam.ResultCode;
 import com.example.demo.web.api01.dao.UserInfoDao;
 import com.example.demo.web.api01.model.UserInfoDto;
@@ -31,7 +33,7 @@ import oldtricks.util.DateTimeUtil2;
 @Slf4j
 @RestController
 @EnableConfigurationProperties(Api01Properties.class)
-public class Api01Service extends AbstractService {
+public class Api01Service extends AbstractService implements TestIf<Param>{
 	/** 外部設定値（共通） */
 	@Autowired
 	private CommonProperties commonProp;
@@ -149,5 +151,11 @@ public class Api01Service extends AbstractService {
 	 */
 	List<UserInfoDto> selectMales() {
 		return userInfoDao.select(UserInfoDto.builder().sex(SexType.男性).build());
+	}
+
+	@Override
+	public void processor(Param param) throws Exception {
+		// TODO 自動生成されたメソッド・スタブ
+		log.info("AAAAAA");
 	}
 }
