@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.web.api01.Api01ServiceTest.TestIf;
 import com.example.demo.web.api01.OutputParam.ResultCode;
 import com.example.demo.web.api01.dao.UserInfoDao;
 import com.example.demo.web.api01.model.UserInfoDto;
@@ -33,7 +32,7 @@ import oldtricks.util.DateTimeUtil2;
 @Slf4j
 @RestController
 @EnableConfigurationProperties(Api01Properties.class)
-public class Api01Service extends AbstractService implements TestIf<Param>{
+public class Api01Service extends AbstractService {
 	/** 外部設定値（共通） */
 	@Autowired
 	private CommonProperties commonProp;
@@ -44,7 +43,8 @@ public class Api01Service extends AbstractService implements TestIf<Param>{
 	@Autowired
 	private UserInfoDao userInfoDao;
 	/** DATEフォーマッター */
-	private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+	private DateTimeFormatter timeFormat = DateTimeFormatter
+			.ofPattern("yyyy/MM/dd HH:mm:ss");
 
 	/**
 	 * 起動時の処理を記述します。
@@ -52,8 +52,10 @@ public class Api01Service extends AbstractService implements TestIf<Param>{
 	@PostConstruct
 	public void init() {
 		log.info("AP version={}", commonProp.getVersion());
-		log.info("startDatetime={}", timeFormat.format(prop.getStartDateTime()));
-		log.info("endDatetime={}", timeFormat.format(prop.getStartDateTime().plusDays(10)));
+		log.info("startDatetime={}",
+				timeFormat.format(prop.getStartDateTime()));
+		log.info("endDatetime={}",
+				timeFormat.format(prop.getStartDateTime().plusDays(10)));
 		log.info("rundom uuid={}", prop.getUuid());
 	}
 
@@ -133,11 +135,15 @@ public class Api01Service extends AbstractService implements TestIf<Param>{
 	 * @param throwEx
 	 * @return
 	 */
-	int insertUser(String firstname, String lastname, SexType sexType, boolean throwEx) {
+	int insertUser(String firstname, String lastname, SexType sexType,
+			boolean throwEx) {
 		int ret = 0;
-		UserInfoDto dto = UserInfoDto.builder().id("" + System.currentTimeMillis()).firstname(firstname)
-				.lastname(lastname).sex(sexType).birthday(DateTimeUtil2.toTimestamp(prop.getStartDateTime()))
-				.updatetime(DateTimeUtil2.toTimestamp(DateTimeUtil2.now())).build();
+		UserInfoDto dto = UserInfoDto.builder()
+				.id("" + System.currentTimeMillis()).firstname(firstname)
+				.lastname(lastname).sex(sexType)
+				.birthday(DateTimeUtil2.toTimestamp(prop.getStartDateTime()))
+				.updatetime(DateTimeUtil2.toTimestamp(DateTimeUtil2.now()))
+				.build();
 		ret = userInfoDao.insert(dto);
 		if (throwEx)
 			throw new IllegalStateException(lastname + firstname);
@@ -150,12 +156,8 @@ public class Api01Service extends AbstractService implements TestIf<Param>{
 	 * @return
 	 */
 	List<UserInfoDto> selectMales() {
-		return userInfoDao.select(UserInfoDto.builder().sex(SexType.男性).build());
+		return userInfoDao
+				.select(UserInfoDto.builder().sex(SexType.男性).build());
 	}
 
-	@Override
-	public void processor(Param param) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-		log.info("AAAAAA");
-	}
 }
