@@ -24,7 +24,7 @@
 
 	<typeHandlers>
 		<typeHandler handler="oldtricks.blogic.mybatis.typehandler.CodableEnumTypeHandler"
-			javaType="com.example.demo.web.common.model.SexType" />
+			javaType="com.example.demo.web.common.enums.SexType" />
 	</typeHandlers>
 
 </configuration>

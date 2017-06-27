@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import org.junit.Test;
+import org.springframework.util.ClassUtils;
 
 public class GenericsTest {
 	/**
@@ -17,8 +18,14 @@ public class GenericsTest {
 	public void test() {
 		try {
 			TestIfImpl target = new TestIfImpl();
+			Type[] types = null;
 			// ターゲットのクラスが直接実装しているインタフェースを取得
-			Type[] types = target.getClass().getGenericInterfaces();
+			// CglibProxyだったら親クラスから取得
+			if (ClassUtils.isCglibProxy(target)) {
+				types = target.getClass().getSuperclass().getGenericInterfaces();
+			} else {
+				types = target.getClass().getGenericInterfaces();
+			}
 			for (Type type : types) {
 				// インタフェースが総称型を含むもののみ抽出
 				if (type instanceof ParameterizedType) {

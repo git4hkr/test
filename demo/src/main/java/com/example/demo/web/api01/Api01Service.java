@@ -160,7 +160,9 @@ public class Api01Service extends AbstractService {
 	 *
 	 * @return ユーザー情報リスト
 	 */
-	 protected List<UserInfoDto> selectMales() {
+
+	protected List<UserInfoDto> selectMales() {
 		return userInfoDao.select(UserInfoDto.builder().sex(SexType.男性).build());
 	}
+
 }

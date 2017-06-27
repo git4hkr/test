@@ -14,10 +14,22 @@ import oldtricks.blogic.mybatis.typehandler.CodableEnum;
  * &lt;/typeHandlers&gt; </div> *
  */
 public enum SexType implements CodableEnum {
-	男性(1), 女性(2), 不明(99);
+	/** */
+	男性(1),
+	/** */
+	女性(2),
+	/** */
+	不明(99);
 
+	/** コード値 */
 	private final int code;
 
+	/**
+	 * コンストラクタ
+	 *
+	 * @param _code
+	 *            コード値
+	 */
 	SexType(int _code) {
 		this.code = _code;
 	}
