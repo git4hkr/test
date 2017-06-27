@@ -20,9 +20,9 @@ public class OutputParam implements Serializable {
 	private ResultCode resultCode;
 	private List<UserInfoDto> users;
 
-	public OutputParam(ResultCode resultCode) {
+	public OutputParam(ResultCode _resultCode) {
 		super();
-		this.resultCode = resultCode;
+		this.resultCode = _resultCode;
 	}
 
 	public enum ResultCode {
@@ -33,8 +33,8 @@ public class OutputParam implements Serializable {
 
 		private final String val;
 
-		private ResultCode(String val) {
-			this.val = val;
+		ResultCode(String _val) {
+			this.val = _val;
 		}
 
 		@Override

@@ -88,7 +88,9 @@ public class Api01Service extends AbstractService {
 	 * 業務処理を記述します。
 	 *
 	 * @param throwEx
+	 *            例外有無
 	 * @throws Exception
+	 *             例外発生時
 	 */
 	@BLogicFunction(value = "updateMaster", showMsg = true, msgId = "MSG_0001")
 	@BLogicDataSourceConfig(type = TYPE_MASTER, readReplica = false)
@@ -101,7 +103,10 @@ public class Api01Service extends AbstractService {
 	 * 業務処理を記述します。
 	 *
 	 * @param throwEx
+	 *            例外有無
 	 * @throws Exception
+	 *             例外発生時
+	 * @return ユーザー情報のリスト
 	 */
 	@BLogicFunction(value = "selectUserFromMaster", showMsg = true, msgId = "MSG_0001")
 	@BLogicDataSourceConfig(type = TYPE_MASTER, readReplica = false)
@@ -114,7 +119,9 @@ public class Api01Service extends AbstractService {
 	 * 業務処理を記述します。
 	 *
 	 * @param throwEx
+	 *            例外有無
 	 * @throws Exception
+	 *             例外発生時
 	 */
 	@BLogicFunction(value = "updateShard", showMsg = true, msgId = "MSG_0002")
 	@BLogicDataSourceConfig(type = TYPE_SHARD, readReplica = false)
@@ -127,27 +134,33 @@ public class Api01Service extends AbstractService {
 	 * ユーザー情報テーブルにINSERT発行。
 	 *
 	 * @param firstname
+	 *            名
 	 * @param lastname
+	 *            姓
+	 * @param sexType
+	 *            性別
 	 * @param throwEx
-	 * @return
+	 *            例外有無
+	 * @return インサート行数
 	 */
-	int insertUser(String firstname, String lastname, SexType sexType, boolean throwEx) {
+	final int insertUser(String firstname, String lastname, SexType sexType, boolean throwEx) {
 		int ret = 0;
 		UserInfoDto dto = UserInfoDto.builder().id("" + System.currentTimeMillis()).firstname(firstname)
 				.lastname(lastname).sex(sexType).birthday(DateTimeUtil2.toTimestamp(prop.getStartDateTime()))
 				.updatetime(DateTimeUtil2.toTimestamp(DateTimeUtil2.now())).build();
 		ret = userInfoDao.insert(dto);
-		if (throwEx)
+		if (throwEx) {
 			throw new IllegalStateException(lastname + firstname);
+		}
 		return ret;
 	}
 
 	/**
 	 * 男性のユーザー情報を取得します。
 	 *
-	 * @return
+	 * @return ユーザー情報リスト
 	 */
-	List<UserInfoDto> selectMales() {
+	 protected List<UserInfoDto> selectMales() {
 		return userInfoDao.select(UserInfoDto.builder().sex(SexType.男性).build());
 	}
 }
