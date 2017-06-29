@@ -1,6 +1,5 @@
 package com.example.demo.web.api01;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.example.demo.web.api01.model.UserInfoDto;
@@ -14,9 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OutputParam implements Serializable {
+public class OutputParam {
 
-	private static final long serialVersionUID = 583184444233475969L;
 	private ResultCode resultCode;
 	private List<UserInfoDto> users;
 
