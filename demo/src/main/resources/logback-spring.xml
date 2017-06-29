@@ -29,10 +29,7 @@
 	</appender>
 
 	<logger name="org.springframework" level="info" additivity="true" />
-	<logger name="com.atomikos" level="warn" additivity="true" />
-	<logger name="jdbc.resultset" level="warn" additivity="true" />
-	<logger name="jdbc.audit" level="warn" additivity="true" />
-	<logger name="jdbc.sqlonly" level="warn" additivity="true" />
+	<logger name="com.atomikos" level="error" additivity="true" />
 	<logger name="o.syslog" level="TRACE" additivity="false">
 		<appender-ref ref="SYSLOG" />
 	</logger>

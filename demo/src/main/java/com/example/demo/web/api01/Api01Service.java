@@ -42,7 +42,8 @@ public class Api01Service extends AbstractService {
 	@Autowired
 	private UserInfoDao userInfoDao;
 	/** DATEフォーマッター */
-	private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+	private DateTimeFormatter timeFormat = DateTimeFormatter
+			.ofPattern("yyyy/MM/dd HH:mm:ss");
 
 	/**
 	 * 起動時の処理を記述します。
@@ -50,8 +51,10 @@ public class Api01Service extends AbstractService {
 	@PostConstruct
 	public void init() {
 		log.info("AP version={}", commonProp.getVersion());
-		log.info("startDatetime={}", timeFormat.format(prop.getStartDateTime()));
-		log.info("endDatetime={}", timeFormat.format(prop.getStartDateTime().plusDays(10)));
+		log.info("startDatetime={}",
+				timeFormat.format(prop.getStartDateTime()));
+		log.info("endDatetime={}",
+				timeFormat.format(prop.getStartDateTime().plusDays(10)));
 		log.info("rundom uuid={}", prop.getUuid());
 	}
 
@@ -109,7 +112,7 @@ public class Api01Service extends AbstractService {
 	 * @return ユーザー情報のリスト
 	 */
 	@BLogicFunction(value = "selectUserFromMaster", showMsg = true, msgId = "MSG_0001")
-	@BLogicDataSourceConfig(type = TYPE_MASTER, readReplica = false)
+	@BLogicDataSourceConfig(type = TYPE_MASTER, readReplica = true)
 	@BLogicTransaction(readOnly = true)
 	List<UserInfoDto> selectUserFromMaster(boolean throwEx) throws Exception {
 		return selectMales();
@@ -143,11 +146,15 @@ public class Api01Service extends AbstractService {
 	 *            例外有無
 	 * @return インサート行数
 	 */
-	final int insertUser(String firstname, String lastname, SexType sexType, boolean throwEx) {
+	final int insertUser(String firstname, String lastname, SexType sexType,
+			boolean throwEx) {
 		int ret = 0;
-		UserInfoDto dto = UserInfoDto.builder().id("" + System.currentTimeMillis()).firstname(firstname)
-				.lastname(lastname).sex(sexType).birthday(DateTimeUtil2.toTimestamp(prop.getStartDateTime()))
-				.updatetime(DateTimeUtil2.toTimestamp(DateTimeUtil2.now())).build();
+		UserInfoDto dto = UserInfoDto.builder()
+				.id("" + System.currentTimeMillis()).firstname(firstname)
+				.lastname(lastname).sex(sexType)
+				.birthday(DateTimeUtil2.toTimestamp(prop.getStartDateTime()))
+				.updatetime(DateTimeUtil2.toTimestamp(DateTimeUtil2.now()))
+				.build();
 		ret = userInfoDao.insert(dto);
 		if (throwEx) {
 			throw new IllegalStateException(lastname + firstname);
@@ -162,7 +169,8 @@ public class Api01Service extends AbstractService {
 	 */
 
 	protected List<UserInfoDto> selectMales() {
-		return userInfoDao.select(UserInfoDto.builder().sex(SexType.男性).build());
+		return userInfoDao
+				.select(UserInfoDto.builder().sex(SexType.男性).build());
 	}
 
 }
