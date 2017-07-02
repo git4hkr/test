@@ -28,10 +28,16 @@ import oldtricks.blogic.BLogicFunction;
 import oldtricks.blogic.BLogicTransaction;
 import oldtricks.util.DateTimeUtil2;
 
+/**
+ * API01の実装クラスです。
+ *
+ */
 @Slf4j
 @RestController
 @EnableConfigurationProperties(Api01Properties.class)
 public class Api01Service extends AbstractService {
+	/** */
+	private static final int PLUSDAYS = 10;
 	/** 外部設定値（共通） */
 	@Autowired
 	private CommonProperties commonProp;
@@ -54,7 +60,7 @@ public class Api01Service extends AbstractService {
 		log.info("startDatetime={}",
 				timeFormat.format(prop.getStartDateTime()));
 		log.info("endDatetime={}",
-				timeFormat.format(prop.getStartDateTime().plusDays(10)));
+				timeFormat.format(prop.getStartDateTime().plusDays(PLUSDAYS)));
 		log.info("rundom uuid={}", prop.getUuid());
 	}
 
@@ -146,7 +152,7 @@ public class Api01Service extends AbstractService {
 	 *            例外有無
 	 * @return インサート行数
 	 */
-	final int insertUser(String firstname, String lastname, SexType sexType,
+	protected int insertUser(String firstname, String lastname, SexType sexType,
 			boolean throwEx) {
 		int ret = 0;
 		UserInfoDto dto = UserInfoDto.builder()
@@ -167,7 +173,6 @@ public class Api01Service extends AbstractService {
 	 *
 	 * @return ユーザー情報リスト
 	 */
-
 	protected List<UserInfoDto> selectMales() {
 		return userInfoDao
 				.select(UserInfoDto.builder().sex(SexType.男性).build());
